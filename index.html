@@ -1,0 +1,351 @@
+
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Uma surpresa para você 💌</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <main class="container">
+
+    <section class="card" id="login-panel">
+      <div class="content">
+        <div class="eyebrow">Uma pequena surpresa</div>
+        <h1>Tem algo esperando por você. 💌</h1>
+        <p>Preparei uma missão especial. Para começar, você precisa descobrir a chave que abre essa história.</p>
+
+        <form id="login-form">
+          <div class="field">
+            <label for="name">Como você gosta de ser chamada?</label>
+            <input id="name" type="text" placeholder="Seu nome ou apelido" required>
+          </div>
+          <div class="field">
+            <label for="password">A senha secreta</label>
+            <input id="password" type="password" placeholder="Uma data especial" required>
+          </div>
+          <p id="login-error" class="error" role="alert"></p>
+          <button class="primary" type="submit">Tentar desbloquear ↗</button>
+        </form>
+      </div>
+    </section>
+
+    <section class="card hidden" id="intro-panel">
+      <div class="content">
+        <div class="eyebrow">Acesso autorizado</div>
+        <h1 id="welcome-title">Bem-vinda!</h1>
+        <p>O arquivo foi desbloqueado. As instruções serão liberadas uma por vez. Leia com atenção, porque cada detalhe faz parte do plano.</p>
+
+        <div class="notice">
+          <strong>Regra principal</strong>
+          <p>O destino continua em sigilo. Por enquanto, basta seguir as instruções e deixar o resto para descobrir no momento certo. 🤫</p>
+        </div>
+
+        <button class="primary" id="begin-button" type="button">Abrir a primeira instrução →</button>
+      </div>
+    </section>
+
+    <section class="card hidden" id="envelopes-panel">
+      <div class="content content-wide">
+        <div class="eyebrow">Uma missão para o dia 27</div>
+        <h1>Envelopes secretos</h1>
+        <p>Cada envelope guarda uma charada. Resolva-a para descobrir a próxima instrução. Os envelopes serão desbloqueados em sequência. 💌</p>
+
+        <div class="progress-track">
+          <div class="progress-fill" id="progress-fill"></div>
+        </div>
+        <p class="small-note" id="progress-label">0 de 5 instruções concluídas</p>
+        <div class="envelopes" id="envelope-grid"></div>
+      </div>
+    </section>
+
+    <section class="card hidden" id="riddle-panel">
+      <div class="content">
+        <div class="eyebrow" id="riddle-number">Desafio 01</div>
+        <h2 id="riddle-title">Uma charada para você</h2>
+
+        <div class="riddle-card">
+          <p class="riddle-question" id="riddle-question"></p>
+          <form id="riddle-form">
+            <div class="field">
+              <label for="riddle-answer">Qual é a sua resposta?</label>
+              <input id="riddle-answer" type="text" placeholder="Escreva sua resposta aqui" required>
+            </div>
+            <p class="error" id="riddle-feedback" role="alert"></p>
+            <button class="primary" type="submit">Descobrir a instrução ✨</button>
+          </form>
+        </div>
+        <button class="secondary" id="back-button" type="button">Voltar aos envelopes</button>
+      </div>
+    </section>
+
+    <section class="card hidden" id="instruction-panel">
+      <div class="content">
+        <div class="eyebrow" id="step-number">Instrução 01</div>
+        <h1 id="step-title"></h1>
+        <div id="step-body"></div>
+        <button class="primary" id="next-button" type="button">Voltar aos envelopes →</button>
+      </div>
+    </section>
+
+    <section class="card hidden" id="finish-panel">
+      <div class="content">
+        <div class="eyebrow">Missão concluída</div>
+        <h1>Você conseguiu! 💗</h1>
+        <p>Agora você já tem todas as pistas necessárias. O restante vamos descobrir juntas.</p>
+
+        <div class="notice">
+          <strong>Uma última coisa...</strong>
+          <p>[ESPAÇO RESERVADO PARA A MENSAGEM ESPECIAL DA CAROL 💌]</p>
+        </div>
+        <p>Prepare-se para viver momentos bonitos comigo. O destino continua sendo segredo! ❤️</p>
+      </div>
+    </section>
+
+  </main>
+
+  <script>
+    (() => {
+      const $ = id => document.getElementById(id);
+      const panelIds = [
+        "login-panel", "intro-panel", "envelopes-panel",
+        "riddle-panel", "instruction-panel", "finish-panel"
+      ];
+
+      function showPanel(id) {
+        panelIds.forEach(panel => $(panel).classList.add("hidden"));
+        $(id).classList.remove("hidden");
+        window.scrollTo({ top: 0, behavior: "smooth" });
+      }
+
+      const steps = [
+        {
+          title: "Preparativos secretos",
+          body: `
+            <p>Amanhã, quando chegar de manhã, precisa arrumar algumas coisas. Tu não vai voltar para casa até depois do aniversário, então prepara tudo o que vai precisar para passar alguns dias fora. ❤️</p>
+            <ul>
+              <li>Roupas para alguns dias</li>
+              <li>Roupa de banho</li>
+              <li>Pijama e roupas íntimas</li>
+              <li>Itens de higiene pessoal</li>
+              <li>Medicamentos</li>
+              <li>Carregador do celular</li>
+              <li>Os vinhos 🍷</li>
+              <li>O que mais precisar</li>
+            </ul>
+            <p>O destino continua em segredo. 🤫</p>
+          `
+        },
+        {
+          title: "O início da missão",
+          body: `
+            <p>No dia <strong>27</strong>, a missão começa às <strong>7h da manhã</strong>. Vou estar te esperando na saída do teu trabalho. ⏰</p>
+            <p>Deixa tudo organizado para conseguirmos sair no horário combinado!</p>
+          `
+        },
+        {
+          title: "Uma pausa gostosa",
+          body: `
+            <p>Não precisa tomar café antes de sair. No caminho, vamos parar em um lugar diferente para tomar café da manhã juntas. 🥐☕</p>
+            <p>Quero começar esse passeio contigo de um jeito especial.</p>
+          `
+        },
+        {
+          title: "Combinado entre nós",
+          body: `
+            <p>Quero que tu aproveite o passeio comigo. ❤️</p>
+            <p>Não precisa ficar perguntando para onde vamos ou o que faremos depois. Confia no plano e aproveita cada momento. Eu cuidei dos detalhes pensando em nós duas.</p>
+          `
+        },
+        {
+          title: "Guarda cada instante",
+          body: `
+            <p>Quero que a gente registre alguns momentos especiais desse passeio. 📸</p>
+            <p>Tira fotos, faz vídeos e guarda lembranças para podermos rever tudo depois. Mas não precisa transformar tudo em uma sessão de fotos: o mais importante é viver o momento. Quero tu aproveite 💗</p>
+          `
+        }
+      ];
+
+      const riddles = [
+        {
+          title: "Transporte de amostras",
+          question: "No laboratório, transporto amostras e materiais com cuidado. Fora dele, também sou indispensável quando alguém vai passar alguns dias longe de casa. O que sou?",
+          answers: ["mala"],
+          hint: "preparar roupas para alguns dias"
+        },
+      {
+        title: "O tempo de reação",
+          question: "Enquanto muita gente ainda está começando a acordar, tem gente que já está trabalhando. Tu conhece bem essa rotina. Mas, no dia 27, quero que prestes atenção: quando chegar a hora de encerrar teu expediente, vai ter alguém te esperando para começar algo diferente. Que horas nossa missão começa?",
+          answers: ["7", "07", "7h", "07h", "7:00", "07:00"],
+          hint: "no dia 27, às 7h"
+        },
+        {
+          title: "O metabolismo da manhã",
+          question: "Depois de horas em jejum durante o sono, o organismo precisa voltar a receber energia. Qual é a primeira refeição do dia? A nossa vai ser em um lugar diferente.",
+          answers: ["café", "café da manhã", "desjejum", "pequeno almoço", "breakfast"],
+          hint: "É a refeição que fazemos pela manhã."
+        },
+        {
+          title: "Homeostase",
+          question: "O organismo possui mecanismos para manter o equilíbrio mesmo quando acontecem mudanças. Em uma surpresa, nem tudo precisa estar sob nosso controle. Qual atitude ajuda a aproveitar melhor o que foi preparado?",
+          answers: ["confiar", "relaxar", "aproveitar" ],
+          hint: "Confiar no plano."
+        },
+        {
+          title: "Registro de dados",
+          question: "Na pesquisa, registramos dados para analisar os resultados depois. No nosso passeio, também quero guardar algumas evidências dos momentos que vivermos. O que podemos fazer com o celular?",
+          answers: ["tirar fotos", "fotografar", "gravar vídeos", "filmar"],
+          hint: "Registrar alguns momentos com fotos e vídeos"
+        },
+       
+      ];
+
+      let unlocked = 0;
+      let currentStep = 0;
+      let currentRiddle = 0;
+
+      function normalize(value) {
+        return value.trim().toLocaleLowerCase("pt-BR")
+          .normalize("NFD")
+          .replace(/[\u0300-\u036f]/g, "")
+          .replace(/[^a-z0-9: ]/g, "")
+          .replace(/\s+/g, " ");
+      }
+
+      function isCorrect(answer, accepted) {
+        const value = normalize(answer);
+        if (!value) return false;
+
+        return accepted.some(item => {
+          const expected = normalize(item);
+          if (value === expected) return true;
+
+          // Para respostas numéricas, exigir equivalência exata.
+          if (/^[0-9: ]+$/.test(value) && /^[0-9: ]+$/.test(expected)) {
+            return false;
+          }
+
+          return value.includes(expected);
+        });
+      }
+
+      $("login-form").addEventListener("submit", event => {
+        event.preventDefault();
+
+        const password = $("password").value.trim().replace(/[\s.-]/g, "/");
+        const valid = ["08/08/26", "08/08/2026", "080826", "08082026"];
+
+        if (!valid.includes(password)) {
+          $("login-error").textContent =
+            "Senha incorreta. Pensa em uma data especial de vocês. 💭";
+          return;
+        }
+
+        const name = $("name").value.trim() || "Bruna";
+        $("welcome-title").textContent = "Bem-vinda, " + name + ".";
+        $("login-error").textContent = "";
+        showPanel("intro-panel");
+      });
+
+      function renderEnvelopes() {
+        const grid = $("envelope-grid");
+        grid.replaceChildren();
+
+        steps.forEach((step, index) => {
+          const button = document.createElement("button");
+          button.type = "button";
+          button.className = "envelope";
+          button.disabled = index !== unlocked;
+
+          const icon = document.createElement("span");
+          icon.className = "envelope-icon";
+          icon.textContent = index < unlocked ? "💌" :
+            index === unlocked ? "✉️" : "🔒";
+
+          const label = document.createElement("strong");
+          label.textContent = "Envelope " + String(index + 1).padStart(2, "0");
+
+          const status = document.createElement("small");
+          status.textContent = index < unlocked ? "Concluído" :
+            index === unlocked ? "Resolver charada" : "Bloqueado";
+
+          button.append(icon, label, status);
+          button.addEventListener("click", () => {
+            if (index !== unlocked) return;
+            currentRiddle = index;
+            renderRiddle();
+            showPanel("riddle-panel");
+          });
+          grid.appendChild(button);
+        });
+
+        $("progress-label").textContent =
+          unlocked + " de " + steps.length + " instruções concluídas";
+        $("progress-fill").style.width =
+          (unlocked / steps.length * 100) + "%";
+      }
+
+      function renderRiddle() {
+        const riddle = riddles[currentRiddle];
+        $("riddle-number").textContent =
+          "DESAFIO " + String(currentRiddle + 1).padStart(2, "0");
+        $("riddle-title").textContent = riddle.title;
+        $("riddle-question").textContent = riddle.question;
+        $("riddle-answer").value = "";
+        $("riddle-feedback").textContent = "";
+      }
+
+      function renderInstruction() {
+        const step = steps[currentStep];
+        $("step-number").textContent =
+          "INSTRUÇÃO " + String(currentStep + 1).padStart(2, "0");
+        $("step-title").textContent = step.title;
+        $("step-body").innerHTML = step.body;
+        $("next-button").textContent = currentStep === steps.length - 1
+          ? "Concluir missão ✓"
+          : "Voltar aos envelopes →";
+      }
+
+      $("begin-button").addEventListener("click", () => {
+        unlocked = 0;
+        currentStep = 0;
+        renderEnvelopes();
+        showPanel("envelopes-panel");
+      });
+
+      $("riddle-form").addEventListener("submit", event => {
+        event.preventDefault();
+        const riddle = riddles[currentRiddle];
+        const answer = $("riddle-answer").value;
+
+        if (!isCorrect(answer, riddle.answers)) {
+          $("riddle-feedback").textContent =
+            "Ainda não! 💭 Dica: " + riddle.hint;
+          return;
+        }
+
+        currentStep = currentRiddle;
+        renderInstruction();
+        showPanel("instruction-panel");
+      });
+
+      $("back-button").addEventListener("click", () => {
+        renderEnvelopes();
+        showPanel("envelopes-panel");
+      });
+
+      $("next-button").addEventListener("click", () => {
+        if (currentStep === steps.length - 1) {
+          showPanel("finish-panel");
+          return;
+        }
+
+        unlocked = currentStep + 1;
+        renderEnvelopes();
+        showPanel("envelopes-panel");
+      });
+    })();
+  </script>
+</body>
+</html>

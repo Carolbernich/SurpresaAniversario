@@ -80,10 +80,20 @@
       </div>
     </section>
 
-    <section class="card hidden" id="instruction-panel">
-      <div class="content">
-        <div class="eyebrow" id="step-number">Instrução 01</div>
-        <h1 id="step-title"></h1>
+    <section class="card hidden" id="instruction-panel" aria-labelledby="step-title">
+      <div class="content instruction-card">
+        <header class="instruction-header">
+          <span class="instruction-seal" aria-hidden="true">
+            <svg viewBox="0 0 32 32" fill="none" focusable="false">
+              <rect x="4" y="7" width="24" height="18" rx="3" />
+              <path d="m5 9 11 8L27 9M5 23l7-6m15 6-7-6" />
+            </svg>
+          </span>
+          <div class="instruction-heading">
+            <div class="eyebrow" id="step-number">Instrução 01</div>
+            <h1 id="step-title"></h1>
+          </div>
+        </header>
         <div id="step-body"></div>
         <button class="primary" id="next-button" type="button">Voltar aos envelopes →</button>
       </div>
@@ -162,7 +172,7 @@
           title: "Guarda cada instante",
           body: `
             <p>Quero que a gente registre alguns momentos especiais desse passeio. 📸</p>
-            <p>Tira fotos, faz vídeos e guarda lembranças para podermos rever tudo depois. Mas não precisa transformar tudo em uma sessão de fotos: o mais importante é viver o momento. Quero tu aproveite 💗</p>
+            <p>Tira fotos, faz vídeos e guarda lembranças para podermos rever tudo depois. Mas não precisa transformar tudo em uma sessão de fotos: o mais importante é viver o momento. Quero que tu aproveite 💗</p>
           `
         }
       ];

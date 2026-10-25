@@ -90,7 +90,7 @@
             </svg>
           </span>
           <div class="instruction-heading">
-            <div class="eyebrow" id="step-number">Instrução 01</div>
+            <div class="eyebrow" id="step-number">Instrução 01 de 05</div>
             <h1 id="step-title"></h1>
           </div>
         </header>
@@ -126,14 +126,14 @@
       function showPanel(id) {
         panelIds.forEach(panel => $(panel).classList.add("hidden"));
         $(id).classList.remove("hidden");
-        window.scrollTo({ top: 0, behavior: "smooth" });
+        window.scrollTo({ top: 0, behavior: window.matchMedia("(prefers-reduced-motion: reduce)").matches ? "instant" : "smooth" });
       }
 
       const steps = [
         {
           title: "Preparativos secretos",
           body: `
-            <p>Amanhã, quando chegar de manhã, precisa arrumar algumas coisas. Tu não vai voltar para casa até depois do aniversário, então prepara tudo o que vai precisar para passar alguns dias fora. ❤️</p>
+            <p>Hoje tu precisa arrumar algumas coisas. Tu não vai voltar para casa até depois do teu aniversário, então prepara tudo o que vai precisar para passar alguns dias fora. ❤️</p>
             <ul>
               <li>Roupas para alguns dias</li>
               <li>Roupa de banho</li>
@@ -172,7 +172,7 @@
           title: "Guarda cada instante",
           body: `
             <p>Quero que a gente registre alguns momentos especiais desse passeio. 📸</p>
-            <p>Tira fotos, faz vídeos e guarda lembranças para podermos rever tudo depois. Mas não precisa transformar tudo em uma sessão de fotos: o mais importante é viver o momento. Quero que tu aproveite 💗</p>
+            <p>Pode tirar fotos, gravar vídeos e guardar lembranças para podermos rever tudo depois. Mas não precisa transformar tudo em uma sessão de fotos: o mais importante é viver o momento. Quero que tu aproveite 💗</p>
           `
         }
       ];
@@ -309,7 +309,7 @@
       function renderInstruction() {
         const step = steps[currentStep];
         $("step-number").textContent =
-          "INSTRUÇÃO " + String(currentStep + 1).padStart(2, "0");
+          "INSTRUÇÃO " + String(currentStep + 1).padStart(2, "0") + " DE " + String(steps.length).padStart(2, "0");
         $("step-title").textContent = step.title;
         $("step-body").innerHTML = step.body;
         $("next-button").textContent = currentStep === steps.length - 1
